@@ -96,6 +96,7 @@ aside {
 .navbar-default .nav > li > a:focus:hover {
   color: #F05F40;
 }
+
 .navbar-default .nav > li.active > a,
 .navbar-default .nav > li.active > a:focus {
   color: #F05F40 !important;
@@ -146,6 +147,24 @@ aside {
     color: #F05F40;
   }
 }
+
+nav li a:after {
+  transition: all .5s cubic-bezier(.25,.1,.25,1);
+  content: "";
+  border-bottom: 1px solid #F05F40;
+  display: block;
+  width: 75%;
+  position: absolute;
+  bottom: 10px;
+  -ms-transform: scaleX(0);
+  transform: scaleX(0)
+}
+
+nav li a:hover:after {
+  -ms-transform: scaleX(1);
+  transform: scaleX(1)
+}
+
 header {
   position: relative;
   width: 100%;
@@ -427,4 +446,16 @@ footer ul li a.active {
 
 .form-container button:hover {
     background-color: #eb3812;
+}
+
+.features-item-num {
+    font-size: 6.4375rem;
+    padding-top: 5px;
+    min-width: 60px;
+    font-weight: 300;
+    transition: 0.3s;
+    will-change: font-size;
+    color: #4F555C;
+    line-height: 1.5;
+    font-family: "Graphik","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
