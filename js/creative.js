@@ -50,6 +50,26 @@
         $('#SignUpForm').submit(function(e) {
             $('#confirmDiv').show();
         });
+    });
+
+    $(document).ready(function() {
+        $('.demo').hide();
+        $('.demo.active').show();
+    });
+
+    $(".features-item").on('click', function(){
+        var index = $(this).index();
+        $(".features-item.active").removeClass("active");
+        $(this).addClass("active");
+
+
+        var activeDemo = $(".demo.active");
+        var newActiveDemo = $(".demo").eq(index);
+
+        activeDemo.removeClass("active");
+        activeDemo.hide();
+        newActiveDemo.addClass("active");
+        newActiveDemo.show();
     })
 
 })(jQuery); // End of use strict
