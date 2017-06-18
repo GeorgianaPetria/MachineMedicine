@@ -64,7 +64,12 @@
 
 
         var activeDemo = $(".demo.active");
+        activeDemo.find("video")[0].pause();
+
         var newActiveDemo = $(".demo").eq(index);
+        var video = newActiveDemo.find("video")[0];
+        video.currentTime = 0;
+        video.play();
 
         activeDemo.removeClass("active");
         activeDemo.hide();
