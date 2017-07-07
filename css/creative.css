@@ -235,12 +235,12 @@ header .header-content .header-content-inner p {
   margin-top: 0;
 }
 .service-box {
-  max-width: 400px;
-  margin: 50px auto 0;
+  max-width: 450px;
+  margin: 10px auto 0;
 }
 @media (min-width: 992px) {
   .service-box {
-    margin: 20px auto 0;
+    margin: 10px auto 0;
   }
 }
 .service-box p {
