@@ -611,3 +611,32 @@ footer ul li a.active {
         display: block;
     }
 }
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 35px;
+    height: 0;
+    overflow: hidden;
+}
+
+.video-container iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.camera-img {
+    display: none;
+}
+
+@media (min-width: 560px) {
+    .camera-img {
+      display: inline;
+      max-width:60px; 
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+}
