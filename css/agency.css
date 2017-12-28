@@ -159,6 +159,9 @@ header.masthead {
       font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
 
 @media (min-width: 768px) {
+  header.masthead {
+      background-image: url("../img/header-small.jpg");
+  }
   header.masthead .intro-text {
     padding-top: 300px;
     padding-bottom: 200px; }
