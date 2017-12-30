@@ -6,6 +6,10 @@ $('.upload-btn').on('click', function (){
     $('.progress-bar').width('0%');
 });
 
+$('#upload-input').on('change', function(){
+  $('#require-selection').text("");
+});
+
 $('#uploadVideo').submit(function(){
 
   var files = $('#upload-input').get(0).files;
