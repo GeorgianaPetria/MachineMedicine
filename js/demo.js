@@ -1,3 +1,6 @@
+// The URL to your endpoint that maps to s3Credentials function
+var credentialsUrl = 'http://localhost:5000/s3_credentials';
+
 $('.upload-btn').on('click', function (){
     $('#upload-input').click();
     $('.progress-bar').text('0%');
@@ -21,41 +24,68 @@ $('#upload-input').on('change', function(){
       formData.append('uploads[]', file, file.name);
     }
 
+    var file = files[0];
+    var filename = file.name;
+    var contentType = file.type;
+
     $.ajax({
-      url: '/upload',
-      type: 'POST',
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function(data){
-          console.log('upload successful!\n' + data);
+      url: credentialsUrl,
+      type: 'GET',
+      dataType: 'json',
+      data: {
+        filename: filename,
+        content_type: contentType
       },
-      xhr: function() {
-        // create an XMLHttpRequest
-        var xhr = new XMLHttpRequest();
+      success: function(s3Data) {
+        data = new FormData();
 
-        // listen to the 'progress' event
-        xhr.upload.addEventListener('progress', function(evt) {
+        Object.keys(s3Data.params).forEach(function(key, idx) {
+          console.log(key, idx, s3Data.params[key]);
+          data.append(key, s3Data.params[key]);
+        });
+        data.append('file', file, filename);
 
-          if (evt.lengthComputable) {
-            // calculate the percentage of upload completed
-            var percentComplete = evt.loaded / evt.total;
-            percentComplete = parseInt(percentComplete * 100);
+        url = s3Data.endpoint_url;
 
-            // update the Bootstrap progress bar with the new percentage
-            $('.progress-bar').text(percentComplete + '%');
-            $('.progress-bar').width(percentComplete + '%');
+        console.log(file, filename);
 
-            // once the upload reaches 100%, set the progress bar text to done
-            if (percentComplete === 100) {
-              $('.progress-bar').html('Done');
-            }
+        $.ajax({
+          url: url,
+          type: 'POST',
+          data: data,
+          processData: false,
+          contentType: false,
+          success: function(data){
+              console.log('upload successful!\n' + data);
+          },
+          xhr: function() {
+            // create an XMLHttpRequest
+            var xhr = new XMLHttpRequest();
 
+            // listen to the 'progress' event
+            xhr.upload.addEventListener('progress', function(evt) {
+
+              if (evt.lengthComputable) {
+                // calculate the percentage of upload completed
+                var percentComplete = evt.loaded / evt.total;
+                percentComplete = parseInt(percentComplete * 100);
+
+                // update the Bootstrap progress bar with the new percentage
+                $('.progress-bar').text(percentComplete + '%');
+                $('.progress-bar').width(percentComplete + '%');
+
+                // once the upload reaches 100%, set the progress bar text to done
+                if (percentComplete === 100) {
+                  $('.progress-bar').html('Done');
+                }
+
+              }
+
+            }, false);
+
+            return xhr;
           }
-
-        }, false);
-
-        return xhr;
+        });
       }
     });
 
