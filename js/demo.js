@@ -2,24 +2,22 @@
 var credentialsUrl = 'http://localhost:5000/s3_credentials';
 
 $('.upload-btn').on('click', function (){
-    $('#upload-input').click();
     $('.progress-bar').text('0%');
     $('.progress-bar').width('0%');
 });
 
-$('#upload-input').on('change', function(){
+$('#uploadVideo').submit(function(){
 
-  var files = $(this).get(0).files;
-
-  if (files.length > 0){
+  var files = $('#upload-input').get(0).files;
+  if (files.length > 0) {
+    var formElement = document.getElementById('uploadVideo');
     // create a FormData object which will be sent as the data payload in the
     // AJAX request
-    var formData = new FormData();
+    var formData = new FormData(formElement);
 
     // loop through all the selected files and add them to the formData object
     for (var i = 0; i < files.length; i++) {
       var file = files[i];
-
       // add the files to formData object for the data payload
       formData.append('uploads[]', file, file.name);
     }
@@ -37,7 +35,7 @@ $('#upload-input').on('change', function(){
         content_type: contentType
       },
       success: function(s3Data) {
-        data = new FormData();
+        var data = new FormData();
 
         Object.keys(s3Data.params).forEach(function(key, idx) {
           console.log(key, idx, s3Data.params[key]);
@@ -45,9 +43,7 @@ $('#upload-input').on('change', function(){
         });
         data.append('file', file, filename);
 
-        url = s3Data.endpoint_url;
-
-        console.log(file, filename);
+        var url = s3Data.endpoint_url;
 
         $.ajax({
           url: url,
@@ -78,7 +74,6 @@ $('#upload-input').on('change', function(){
                 if (percentComplete === 100) {
                   $('.progress-bar').html('Done');
                 }
-
               }
 
             }, false);
@@ -89,5 +84,8 @@ $('#upload-input').on('change', function(){
       }
     });
 
+  } else {
+    $('#require-selection').text("Please choose a video.");
   }
+  return false;
 });
