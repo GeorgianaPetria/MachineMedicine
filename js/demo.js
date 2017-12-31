@@ -1,5 +1,5 @@
 // The URL to your endpoint that maps to s3Credentials function
-var credentialsUrl = 'http://localhost:5000/s3_credentials';
+var credentialsUrl = 'http://ec2-34-243-62-38.eu-west-1.compute.amazonaws.com/s3_credentials';
 
 $('.upload-btn').on('click', function (){
   $('.progress-bar').text('0%');
